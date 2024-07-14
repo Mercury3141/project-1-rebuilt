@@ -1,15 +1,15 @@
 :root {
-    --background: white;
-    --color: #222;
+    --background: rgb(238, 238, 240);
+    --color: rgb(0, 0, 0);
 }
 
 .dark-theme {
-    --background: #222;
-    --color: white;
+    --background: rgb(28, 28, 28);
+    --color: rgb(255, 255, 255);
 }
 
 body, html, button, label, textarea, input {
-    font-family: 'Roboto', sans-serif;
+    font-family: Helvetica, Arial, sans-serif;
 }
 
 body {
@@ -17,10 +17,6 @@ body {
     flex-direction: column;
     background: var(--background);
     color: var(--color);
-}
-
-main {
-    margin: 10px;
 }
 
 .invisible{
@@ -33,30 +29,30 @@ main {
 }
 
 button {
-    background-color: #007BFF;
+    background-color: rgb(255, 159, 10);
     color: white;
     padding: 3px 10px;
     font-size: 16px;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 8px;
     border: none;
     transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: blue;
+    background-color: rgb(255, 184, 110);
 }
 
 .btn-row-1 {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 5px;
+    margin-bottom: 16px;
 }
 
 .btn-row-2 {
     display: grid;
     grid-template-columns: max-content max-content max-content max-content auto;
-    column-gap: 5px;
+    column-gap: 8px;
 }
 
 .filter {
@@ -70,7 +66,7 @@ main form {
     flex-direction: column;
     flex: 0 0 50%;
     margin: 0;
-    row-gap: 5px;
+    row-gap: 8px;
 }
 
 .form-row-Completed {
@@ -85,8 +81,8 @@ main form {
 
 .form-btn {
     display: flex;
-    column-gap: 5px;
-    margin-top: 5px;
+    column-gap: 8px;
+    margin-top: 8px;
 }
 
 .form-btn-delete {
@@ -96,7 +92,7 @@ main form {
 }
 
 .form-btn-delete button {
-    background-color: red;
+    background-color: rgb(255, 59, 48);
     color: white;
     transition: background-color 0.3s ease;
 }
