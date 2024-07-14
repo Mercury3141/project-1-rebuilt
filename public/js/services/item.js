@@ -6,7 +6,7 @@ export class Item {
         this.dueDate = duedate;
         this.completed = done || false;
         this.description = description;
-        this.createdate = createdate;
+        this.createDate = createdate;
         this.dbid = dbid;
     }
 }
