@@ -36,6 +36,8 @@
         <form action="./index.html" action="POST" id="form">
             <label for="title">Title</label>
             <input type="text" name="title" id="title" required maxlength="50">
+            <label for="description">Description</label>
+            <textarea name="description" id="description" maxlength="255"></textarea>
             <label for="importance">Importance</label>
             <input type="number" name="importance" id="importance" required min="1" max="5" step="1">
             <label for="dueDate">Due Date</label>
@@ -44,8 +46,6 @@
                 <label for="Completed">Completed</label>
                 <input type="checkbox" name="completed" id="Completed">
             </div>
-            <label for="description">Description</label>
-            <textarea name="description" id="description" maxlength="255"></textarea>
             <div class="form-btn">
                 <button type="button" id="btnAdd" data-action="addItem">Add Reminder</button>
                 <button type="button" id="btnAddInBackground" data-action="addItem">Add in Background</button>
