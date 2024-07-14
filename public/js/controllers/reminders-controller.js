@@ -74,7 +74,7 @@ export class RemindersController {
                 Object.assign(this.item, formData);
                 await itemService.updateItem(this.item);
             } else {
-                this.item = await itemService.addItem(formData);
+                this.item = await itemService.addItem(formData.title, formData.importance, formData.dueDate, formData.completed, formData.description);
             }
 
             if (navigate) {
@@ -134,7 +134,7 @@ export class RemindersController {
                 break;
             default:
                 if (event.target.dataset.orderBy) {
-                    itemService.itemSorted(event.target.dataset.orderBy);
+                    itemService.sortItems(event.target.dataset.orderBy);
                     this.updateSortSymbols(event.target.dataset.orderBy);
                     this.showReminders();
                 }
