@@ -16,7 +16,7 @@ export class ItemService {
 
     async loadData() {
         const allItems = await this.storage.getAll();
-        this.items = allItems.map(item => new Item(item.id, item.title, item.importance, item.dueDate, item.isDone, item.description, item.createDate, item._id));
+        this.items = allItems.map(item => new Item(item.id, item.title, item.importance, item.dueDate, item.completed, item.description, item.createDate, item._id));
 
         if (this.items.length === 0) {
             this.items.forEach(item => this.storage.createItems(item));
