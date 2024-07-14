@@ -1,12 +1,12 @@
 export class Item {
-    constructor(id, title, importance, duedate, done, description, createdate, dbid) {
+    constructor(id, title, importance, dueDate, completed, description, createDate, dbid) {
         this.id = id;
         this.title = title;
         this.importance = importance;
-        this.dueDate = duedate;
-        this.completed = done || false;
+        this.dueDate = dueDate;
+        this.completed = completed || false;
         this.description = description;
-        this.createDate = createdate;
+        this.createDate = createDate;
         this.dbid = dbid;
     }
 }

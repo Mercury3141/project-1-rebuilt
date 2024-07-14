@@ -73,13 +73,13 @@ main form {
     row-gap: 5px;
 }
 
-.form-row-done {
+.form-row-Completed {
     display: flex;
     flex-direction: row-reverse;
     justify-content: flex-end;
 }
 
-.form-row-done input[type="checkbox"] {
+.form-row-Completed input[type="checkbox"] {
     cursor: pointer;
 }
 

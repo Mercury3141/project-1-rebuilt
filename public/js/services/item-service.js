@@ -38,8 +38,8 @@ export class ItemService {
         });
     }
 
-    setFilter(done) {
-        if (!done) {
+    setFilter(completed) {
+        if (!completed) {
             this.items = this.items.filter(item => !item.completed);
         } else {
             this.items = this.items.filter(item => item.completed);
@@ -62,8 +62,8 @@ export class ItemService {
         }
     }
 
-    async addItem(title , importance, duedate, completed, description) {
-        let item = new Item(this.items.length, title, importance, duedate, completed, description, new Date());
+    async addItem(title , importance, dueDate, completed, description) {
+        let item = new Item(this.items.length, title, importance, dueDate, completed, description, new Date());
         item = await this.storage.createItem(item);
         item.dbid = item._id;
         this.items.push(item);

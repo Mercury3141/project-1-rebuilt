@@ -37,7 +37,7 @@ export class RemindersController {
         this.form['title'].value = this.item.title;
         this.form['importance'].value = this.item.importance;
         this.form['dueDate'].value = this.item.dueDate;
-        this.form['done'].checked = this.item.completed;
+        this.form['completed'].checked = this.item.completed;
         this.form['description'].value = this.item.description;
 
         this.btnAddInBackground.dataset.action = "updateItem";
@@ -50,7 +50,7 @@ export class RemindersController {
 
     async createItem(navigate) {
         if (this.checkFormValues()) {
-            this.item = await itemService.addItem(this.form['title'].value, this.form['importance'].value, this.form['dueDate'].value, this.form['done'].checked, this.form['description'].value);
+            this.item = await itemService.addItem(this.form['title'].value, this.form['importance'].value, this.form['dueDate'].value, this.form['completed'].checked, this.form['description'].value);
             if (navigate) {
                 this.hideItemForm();
             } else {
@@ -67,7 +67,7 @@ export class RemindersController {
             this.item.title = this.form['title'].value;
             this.item.importance = this.form['importance'].value;
             this.item.duedate = this.form['dueDate'].value;
-            this.item.completed = this.form['done'].checked;
+            this.item.completed = this.form['completed'].checked;
             this.item.description = this.form['description'].value;
             await itemService.updateItem(this.item);
             if (navigate) {
@@ -120,7 +120,7 @@ export class RemindersController {
             } else if (event.target.id ==='toggleStyle') {
                 document.body.classList.toggle('dark-theme');
             } else if (event.target.dataset.orderBy !== undefined && event.target.dataset.orderBy.length > 0) {
-                itemService.iteSorted(event.target.dataset.orderBy);
+                itemService.itemSorted(event.target.dataset.orderBy);
                 this.updateSortSymbols(event.target.dataset.orderBy);
                 this.showReminders();
             }
@@ -168,5 +168,4 @@ export class RemindersController {
     }
 }
 
-// create one-and-only instance
 new RemindersController().initialize();
