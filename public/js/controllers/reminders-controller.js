@@ -49,8 +49,9 @@ export class RemindersController {
     setFormForEdit() {
         this.btnAddInBackground.dataset.action = "updateItem";
         this.btnAddInBackground.innerHTML = "Update";
+        this.btnAddInBackground.style.display = "none";
         this.btnAdd.dataset.action = "updateItem";
-        this.btnAdd.innerHTML = "Update & Overview";
+        this.btnAdd.innerHTML = "Update";
     }
 
     editItem(item) {
