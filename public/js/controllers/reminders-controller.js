@@ -86,9 +86,9 @@ export class RemindersController {
     resetForm() {
         this.form.reset();
         this.btnAddInBackground.dataset.action = "addItem";
-        this.btnAddInBackground.innerHTML = "Create";
+        this.btnAddInBackground.innerHTML = "Add in Background";
         this.btnAdd.dataset.action = "addItem";
-        this.btnAdd.innerHTML = "Create & Overview";
+        this.btnAdd.innerHTML = "Add";
     }
 
     checkFormValues() {
