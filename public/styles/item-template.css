@@ -1,0 +1,57 @@
+.todo-entry {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 5px;
+    align-items: center;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid black;
+}
+
+.todo-entry .dueDate {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+}
+
+.todo-entry .title {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+}
+
+.todo-entry .importance {
+    grid-column: 3 / 4;
+    grid-row: 1 / 2;
+}
+
+.todo-entry .checkbox {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+}
+
+.todo-entry .description {
+    grid-column: 2 / 4;
+    grid-row: 2 / 3;
+}
+
+.todo-entry .edit {
+    grid-column: 4 / 5;
+    grid-row: 1 / 3;
+    height: 80%;
+    background-color: #007BFF;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.todo-entry .edit:hover {
+    background-color: blue;
+}
+
+.no-todo {
+    background-color: #eee;
+    color: black;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}

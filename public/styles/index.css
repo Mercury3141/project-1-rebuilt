@@ -1,0 +1,120 @@
+:root {
+    --background: white;
+    --color: #222;
+}
+
+.dark-theme {
+    --background: #222;
+    --color: white;
+}
+
+body, html, button, label, textarea, input {
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    background: var(--background);
+    color: var(--color);
+}
+
+main {
+    margin: 10px;
+}
+
+.invisible{
+    visibility: hidden;
+    height: 0;
+}
+
+.main-container {
+    visibility: hidden;
+}
+
+button {
+    background-color: #007BFF;
+    color: white;
+    padding: 3px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: blue;
+}
+
+.btn-row-1 {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.btn-row-2 {
+    display: grid;
+    grid-template-columns: max-content max-content max-content max-content auto;
+    column-gap: 5px;
+}
+
+.filter {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    justify-items: end;
+}
+
+main form {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 50%;
+    margin: 0;
+    row-gap: 5px;
+}
+
+.form-row-done {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+.form-row-done input[type="checkbox"] {
+    cursor: pointer;
+}
+
+.form-btn {
+    display: flex;
+    column-gap: 5px;
+    margin-top: 5px;
+}
+
+.form-btn-delete {
+    display: flex;
+    flex: auto;
+    justify-content: flex-end;
+}
+
+.form-btn-delete button {
+    background-color: red;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.form-btn-delete button:hover {
+    background-color: rgb(171, 0, 0);
+}
+
+.sortSymbol {
+    color: white;
+}
+
+.sortSymbol.asc::after {
+    margin-left: 10px;
+    content: "▲";
+}
+
+.sortSymbol.desc::after {
+    margin-left: 10px;
+    content: "▼";
+}
