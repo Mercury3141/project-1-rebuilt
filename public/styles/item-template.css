@@ -4,39 +4,40 @@
     grid-template-rows: auto auto;
     gap: 12px;
     align-items: center;
-    padding-top: 16px;
-    padding-left: 16px;
-    padding-bottom: 16px;
+    padding: 16px 0 16px 16px;
     border-bottom: 0.8px solid black;
 }
 
+.item-entry .dueDate,
+.item-entry .checkbox {
+    grid-column: 1;
+}
+
 .item-entry .dueDate {
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
-}
-
-.item-entry .title {
-    grid-column: 2 / 3;
-    grid-row: 1 / 2;
-}
-
-.item-entry .importance {
-    grid-column: 3 / 4;
-    grid-row: 1 / 2;
+    grid-row: 1;
 }
 
 .item-entry .checkbox {
-    grid-column: 1 / 2;
-    grid-row: 2 / 3;
+    grid-row: 2;
+}
+
+.item-entry .title {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.item-entry .importance {
+    grid-column: 3;
+    grid-row: 1;
 }
 
 .item-entry .description {
     grid-column: 2 / 4;
-    grid-row: 2 / 3;
+    grid-row: 2;
 }
 
 .item-entry .edit {
-    grid-column: 4 / 5;
+    grid-column: 4;
     grid-row: 1 / 3;
     height: 80%;
     background-color: rgb(255, 159, 10);

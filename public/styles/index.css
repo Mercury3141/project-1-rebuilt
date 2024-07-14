@@ -19,13 +19,12 @@ body {
     color: var(--color);
 }
 
-.invisible{
+.invisible, .main-container {
     visibility: hidden;
-    height: 0;
 }
 
-.main-container {
-    visibility: hidden;
+.invisible {
+    height: 0;
 }
 
 button {
@@ -37,21 +36,25 @@ button {
     border-radius: 8px;
     border: none;
     transition: background-color 0.3s ease;
+    height: 40px;
 }
 
 button:hover {
     background-color: rgb(255, 184, 110);
 }
 
-.btn-row-1 {
+.btn-row-1, .form-row-Completed, .form-btn, .form-btn-delete {
     display: flex;
+}
+
+.btn-row-1 {
     justify-content: space-between;
     margin-bottom: 16px;
 }
 
 .btn-row-2 {
     display: grid;
-    grid-template-columns: max-content max-content max-content max-content auto;
+    grid-template-columns: repeat(4, max-content) auto;
     column-gap: 8px;
 }
 
@@ -70,7 +73,6 @@ main form {
 }
 
 .form-row-Completed {
-    display: flex;
     flex-direction: row-reverse;
     justify-content: flex-end;
 }
@@ -80,13 +82,11 @@ main form {
 }
 
 .form-btn {
-    display: flex;
     column-gap: 8px;
     margin-top: 8px;
 }
 
 .form-btn-delete {
-    display: flex;
     flex: auto;
     justify-content: flex-end;
 }
@@ -113,8 +113,4 @@ main form {
 .sortSymbol.desc::after {
     margin-left: 6px;
     content: "⬇︎";
-}
-
-button {
-    height: 40px;
 }
