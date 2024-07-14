@@ -106,11 +106,15 @@ main form {
 }
 
 .sortSymbol.asc::after {
-    margin-left: 10px;
-    content: "▲";
+    margin-left: 6px;
+    content: "⬆︎";
 }
 
 .sortSymbol.desc::after {
-    margin-left: 10px;
-    content: "▼";
+    margin-left: 6px;
+    content: "⬇︎";
+}
+
+button {
+    height: 40px;
 }
