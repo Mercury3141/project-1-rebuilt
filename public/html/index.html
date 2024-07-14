@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Reminders</title>
+    <script defer src="./js/controllers/items-controller.js" type="module"></script>
+    <link rel="stylesheet" href="../styles/index.css">
+    <link rel="stylesheet" href="../styles/item-template.css">
+</head>
+<body>
+
+<header>
+    <h1>My Reminders</h1>
+</header>
+
+<main>
+    <section class="card" id="btn-container">
+        <div class="btn-row-1">
+            <button type="button" id="newItem">Add Reminder</button>
+            <button type="button" id="toggleStyle">Change Style</button>
+        </div>
+
+        <div class="btn-row-2">
+            <button class="sortSymbol" type="button" data-order-by="title" id="btnTitle">Title</span></button>
+            <button class="sortSymbol" type="button" data-order-by="createDate" id="btnCreateDate">Creation Date</button>
+            <button class="sortSymbol" type="button" data-order-by="dueDate" id="btnDueDate">Due Date</button>
+            <button class="sortSymbol" type="button" data-order-by="importance" id="btnImportance">Importance</button>
+            <div class="filter">
+                <button type="button" id="toggleFilter">Show Completed</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="card" id="todo-container"></section>
+    <section class="card invisible" id="form-container">
+        <form action="./index.html" action="POST" id="form">
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title" required maxlength="50">
+            <label for="importance">Importance</label>
+            <input type="number" name="importance" id="importance" required min="1" max="5" step="1">
+            <label for="dueDate">Due Date</label>
+            <input type="date" name="duedate" id="dueDate">
+            <div class="form-row-Completed">
+                <label for="Completed">Completed</label>
+                <input type="checkbox" name="done" id="Completed">
+            </div>
+            <label for="description">Description</label>
+            <textarea name="description" id="description" maxlength="255"></textarea>
+            <div class="form-btn">
+                <button type="button" id="btnAdd" data-action="addItem">Add</button>
+                <button type="button" id="btnAddInBackground" data-action="addItem">Add in Background</button>
+                <button type="button" id="btnCancel">Cancel</button>
+                <div class="form-btn-delete">
+                    <button type="button" id="btnDelete">Delete</button>
+                </div>
+            </div>
+        </form>
+    </section>
+</main>
+<footer>
+    <p>&copy; Raphael Brunner. Adapted by Silvan Weber</p>
+</footer>
+<div>
+</div>
+</body>
+</html>
