@@ -1,79 +1,96 @@
 import { itemService } from "../services/item-service.js";
-import { itemTemplate } from "../templates/item-template.js"
+import { itemTemplate } from "../templates/item-template.js";
 
 export class RemindersController {
     constructor() {
-        this.btnContainer = document.querySelector('#btn-container');
-        this.itemContainer = document.querySelector('#item-container');
-        this.formContainer = document.querySelector('#form-container');
-        this.form = document.querySelector('#form');
+        this.initElements();
+        this.items = [];
+    }
 
-        this.btnAdd = document.querySelector('#btnAdd');
-        this.btnAddInBackground = document.querySelector('#btnAddInBackground');
-
-        this.item = [ ];
+    initElements() {
+        const querySelector = (id) => document.querySelector(id);
+        this.btnContainer = querySelector('#btn-container');
+        this.itemContainer = querySelector('#item-container');
+        this.formContainer = querySelector('#form-container');
+        this.form = querySelector('#form');
+        this.btnAdd = querySelector('#btnAdd');
+        this.btnAddInBackground = querySelector('#btnAddInBackground');
     }
 
     async showReminders() {
-        this.itemContainer.innerHTML = itemTemplate.createItemHtml(await itemService.getItems());
+        const items = await itemService.getItems();
+        this.itemContainer.innerHTML = itemTemplate.createItemHtml(items);
+    }
+
+    toggleVisibility(showForm) {
+        const classAction = showForm ? 'add' : 'remove';
+        this.btnContainer.classList.toggle('invisible', showForm);
+        this.itemContainer.classList.toggle('invisible', showForm);
+        this.formContainer.classList.toggle('invisible', !showForm);
     }
 
     hideItemForm() {
-        this.btnContainer.classList.remove('invisible');
-        this.itemContainer.classList.remove('invisible');
-        this.formContainer.classList.add('invisible');
-
+        this.toggleVisibility(false);
         this.showReminders();
     }
 
     showItemForm() {
-        this.btnContainer.classList.add('invisible');
-        this.itemContainer.classList.add('invisible');
-        this.formContainer.classList.remove('invisible');
+        this.toggleVisibility(true);
     }
 
-    editItem(item) {
-        this.item = item;
-        this.form['title'].value = this.item.title;
-        this.form['importance'].value = this.item.importance;
-        this.form['dueDate'].value = this.item.dueDate;
-        this.form['completed'].checked = this.item.completed;
-        this.form['description'].value = this.item.description;
+    populateForm(item) {
+        this.form['title'].value = item.title;
+        this.form['importance'].value = item.importance;
+        this.form['dueDate'].value = item.dueDate;
+        this.form['completed'].checked = item.completed;
+        this.form['description'].value = item.description;
+    }
 
+    setFormForEdit() {
         this.btnAddInBackground.dataset.action = "updateItem";
         this.btnAddInBackground.innerHTML = "Update";
         this.btnAdd.dataset.action = "updateItem";
         this.btnAdd.innerHTML = "Update & Overview";
+    }
 
+    editItem(item) {
+        this.item = item;
+        this.populateForm(item);
+        this.setFormForEdit();
         this.showItemForm();
     }
 
-    async createItem(navigate) {
+    async handleItemAction(navigate, isUpdate) {
         if (this.checkFormValues()) {
-            this.item = await itemService.addItem(this.form['title'].value, this.form['importance'].value, this.form['dueDate'].value, this.form['completed'].checked, this.form['description'].value);
+            const formData = {
+                title: this.form['title'].value,
+                importance: this.form['importance'].value,
+                dueDate: this.form['dueDate'].value,
+                completed: this.form['completed'].checked,
+                description: this.form['description'].value
+            };
+
+            if (isUpdate) {
+                Object.assign(this.item, formData);
+                await itemService.updateItem(this.item);
+            } else {
+                this.item = await itemService.addItem(formData);
+            }
+
             if (navigate) {
                 this.hideItemForm();
             } else {
-                this.btnAddInBackground.dataset.action = "updateItem";
-                this.btnAddInBackground.innerHTML = "Update";
-                this.btnAddInBackground.dataset.action = "updateItem";
-                this.btnAdd.innerHTML = "Update & Overview";
+                this.setFormForEdit();
             }
         }
     }
 
+    async createItem(navigate) {
+        await this.handleItemAction(navigate, false);
+    }
+
     async updateItem(navigate) {
-        if (this.checkFormValues()) {
-            this.item.title = this.form['title'].value;
-            this.item.importance = this.form['importance'].value;
-            this.item.duedate = this.form['dueDate'].value;
-            this.item.completed = this.form['completed'].checked;
-            this.item.description = this.form['description'].value;
-            await itemService.updateItem(this.item);
-            if (navigate) {
-                this.hideItemForm();
-            }
-        }
+        await this.handleItemAction(navigate, true);
     }
 
     async deleteItem(navigate) {
@@ -93,78 +110,69 @@ export class RemindersController {
 
     checkFormValues() {
         this.form.reportValidity();
-        if (form.title.value.length === 0) {
-            return false;
-        }
-        if (form.importance.value.length === 0 || form.importance.value > 5) {
-            return false;
-        }
-        return true;
+        return this.form['title'].value.length > 0 && this.form['importance'].value.length > 0 && this.form['importance'].value <= 5;
     }
 
     updateSortSymbols(orderBy) {
         document.querySelectorAll('.sortSymbol').forEach(el => el.className = 'sortSymbol');
-        const btn = orderBy.charAt(0).toUpperCase() + orderBy.slice(1);
-        const sortSymbol = document.getElementById(`btn${btn}`);
-        sortSymbol.className = `sortSymbol ${itemService.currentSortOrder.desc ? 'desc' : 'asc'}`;
+        const btn = document.getElementById(`btn${orderBy.charAt(0).toUpperCase() + orderBy.slice(1)}`);
+        btn.className = `sortSymbol ${itemService.currentSortOrder.desc ? 'desc' : 'asc'}`;
+    }
+
+    async handleBtnContainerClick(event) {
+        switch (event.target.id) {
+            case 'newItem':
+                this.resetForm();
+                this.showItemForm();
+                break;
+            case 'toggleFilter':
+                await itemService.toggleFilter();
+                this.showReminders();
+                break;
+            case 'toggleStyle':
+                document.body.classList.toggle('dark-theme');
+                break;
+            default:
+                if (event.target.dataset.orderBy) {
+                    itemService.itemSorted(event.target.dataset.orderBy);
+                    this.updateSortSymbols(event.target.dataset.orderBy);
+                    this.showReminders();
+                }
+        }
+    }
+
+    handleItemContainerClick(event) {
+        const id = Number(event.target.dataset.itemId);
+        if (!isNaN(id)) {
+            this.editItem(itemService.items.find(item => item.id === id));
+        }
+    }
+
+    async handleFormContainerClick(event) {
+        if (event.target.tagName === 'BUTTON') {
+            const action = event.target.dataset.action;
+            if (event.target === this.btnAddInBackground) {
+                action === 'addItem' ? this.createItem(false) : this.updateItem(false);
+            } else if (event.target === this.btnAdd) {
+                action === 'addItem' ? this.createItem(true) : this.updateItem(true);
+            } else if (event.target.id === 'btnDelete') {
+                await this.deleteItem(true);
+            } else {
+                this.hideItemForm();
+            }
+        }
     }
 
     initEventHandlers() {
-        this.btnContainer.addEventListener('click', async (event) => {
-            if (event.target.id === 'newItem') {
-                this.resetForm();
-                this.showItemForm();
-            } else if (event.target.id === 'toggleFilter') {
-                await itemService.toggleFilter();
-                this.showReminders();
-            } else if (event.target.id ==='toggleStyle') {
-                document.body.classList.toggle('dark-theme');
-            } else if (event.target.dataset.orderBy !== undefined && event.target.dataset.orderBy.length > 0) {
-                itemService.itemSorted(event.target.dataset.orderBy);
-                this.updateSortSymbols(event.target.dataset.orderBy);
-                this.showReminders();
-            }
-
-        });
-
-        this.itemContainer.addEventListener('click', (event) => {
-            const id = Number(event.target.dataset.itemId);
-            if (!isNaN(id)) {
-                this.editItem(itemService.items.find(item => item.id === id));
-            }
-        });
-
-        this.formContainer.addEventListener('click', (event) => {
-            if (event.target.tagName === 'BUTTON') {
-                if (event.target === this.btnAddInBackground) {
-                    if (event.target.dataset.action === 'addItem') {
-                        this.createItem(false);
-                    } else {
-                        this.updateItem(false);
-                    }
-                } else if (event.target === this.btnAdd) {
-                    if (event.target.dataset.action === 'addItem') {
-                        this.createItem(true);
-                    } else {
-                        this.updateItem(true);
-                    }
-                } else if (event.target.id === 'btnDelete') {
-                    this.deleteItem(true);
-                } else {
-                    this.hideItemForm();
-                }
-            }
-        });
-    }
-
-    renderRemindersView() {
-        this.showReminders();
+        this.btnContainer.addEventListener('click', this.handleBtnContainerClick.bind(this));
+        this.itemContainer.addEventListener('click', this.handleItemContainerClick.bind(this));
+        this.formContainer.addEventListener('click', this.handleFormContainerClick.bind(this));
     }
 
     async initialize() {
         this.initEventHandlers();
         await itemService.loadData();
-        this.renderRemindersView();
+        this.showReminders();
     }
 }
 
